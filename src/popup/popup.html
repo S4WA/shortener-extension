@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<head>
+	<meta charset="UTF-8">
+	<script>
+		window.onload = function() {
+			document.getElementById("version").innerText = "v" + chrome.runtime.getManifest().version;
+			chrome.tabs.getSelected(null, function(tab) {
+				var input = document.getElementById("result"), message = document.getElementById("message");
+				input.value = tab.url;
+				fetch("https://www.dddd.rip/api/shorten?url=" + tab.url)
+					.then(res => res.json())
+					.then(json => {
+						if (json["success"]) {
+							message.style.color = "GREEN";
+							message.innerText = "Copied to Clipboard!"
+
+							input.value = json["shortened"];
+							input.select();
+							document.execCommand("copy")
+						} else {
+							input.style.display = "none";
+							message.style.color = "RED";
+							message.innerText = "Failed!";
+						}
+						input.disabled = true;
+					});
+			});
+		}
+	</script>
+	<style>
+		body {
+			width: 150px;
+		}
+	</style>
+</head>
+
+<body>
+	<h3>url shortener <small id="version"></small><br/><small id="message"></small></h3>
+	<input id="result" type="text" style="width: 140px;">
+</body>
+</html>

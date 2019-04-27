@@ -1,0 +1,13 @@
+{
+	"manifest_version": 2,
+	"name": "dddd.rip url shortener",
+	"description": "https://www.dddd.rip/s",
+	"version": "1.0.0",
+	"homepage_url": "https://github.com/S4WA/shortener-extension",
+	"permissions": [
+		"tabs", "clipboardRead"
+	],
+	"browser_action": {
+		"default_popup": "popup/popup.html"
+	}
+}
